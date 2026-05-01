@@ -77,16 +77,19 @@
         function handleForm(e) {
             e.preventDefault();
             
+            const name = document.getElementById('userName').value;
+            const phone = document.getElementById('userPhone').value;
+            
             // 1. DISPARAR PIXEL DE FACEBOOK (EVENTO LEAD)
             if(typeof fbq !== 'undefined') {
                 fbq('track', 'Lead');
             }
 
-            // 2. ENVIAR A n8n (RELLENA TU WEBHOOK AQUÍ ABAJO)
-            const webhookUrl = 'TU_URL_DE_WEBHOOK_N8N';
+            // 2. ENVIAR A n8n (MODO TEST ACTIVADO)
+            const webhookUrl = 'https://n8n.planneruniversaldigital.com/webhook-test/leads-blindaje';
             const data = {
-                nombre: document.getElementById('userName').value,
-                whatsapp: document.getElementById('userPhone').value,
+                nombre: name,
+                whatsapp: phone,
                 fecha: new Date().toISOString()
             };
 
@@ -97,7 +100,7 @@
                 headers: { 'Content-Type': 'application/json' }
             });
 
-            // 3. MOSTRAR GRACIAS
+            // 3. MOSTRAR GRACIAS INMEDIATAMENTE (INTERFAZ 500MS)
             document.getElementById('landing-page').style.display = 'none';
             document.getElementById('thanks-page').style.display = 'block';
         }
